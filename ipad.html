@@ -54,6 +54,10 @@
     <script>   
         let color, capacity, wifi , ipad = { };  
         const url = "https://raw.githubusercontent.com/Nray811/JsonStorage/main/ipadjson.json";
+        window.onload = function () {
+            event.preventDefault()
+            document.getElementById('search').addEventListener("click", requestJSON);
+            }
         function Color_pick(){
             color = document.getElementById('color').value;
             console.log(color);
@@ -70,12 +74,11 @@
             ipad.color = color;
             ipad.capacity = capacity;
             ipad.wifi = wifi;
+            if (color ==null || capacit==null || wifi==null) 
+            {
+            Swal.fire("請選擇所有選項");
             }
-        window.onload = function () {
-            event.preventDefault()
-            document.getElementById('search').addEventListener("click", requestJSON);
-        }
-        
+            }   
         let ipadArray = [];
         let xhr = new XMLHttpRequest();
         function requestJSON() {
