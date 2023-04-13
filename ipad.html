@@ -1,20 +1,34 @@
-!<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ipad demo</title>
+    <title>I-pad demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <style>
         *{padding: 0; margin: 0;}
         body{background-color: lavender;}
+        .price{width: 100% ; height: auto; color: black; font-size: larger; border-color: white; display: flex; justify-content: center; align-items: center;  }
+        .soldout{background-color: rebeccapurple; color:whitesmoke; border-radius: 50px ; font-weight:bold;display: flex; justify-content: center; align-items: center;}
     </style>
 </head>
 <body>
+    <div class="price d-flex justify-content-center  align-items-center;">
+        <img src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/ipad-air-finish-space-gray-2022?wid=104&amp;hei=104&amp;fmt=png-alpha&amp;.v=1668014174971"
+            style="width: 60px" alt="太空灰色">
+        <img src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/ipad-air-finish-blue-2022?wid=104&amp;hei=104&amp;fmt=png-alpha&amp;.v=1668014174784"
+            style="width: 60px" alt="藍色">
+        <img src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/ipad-air-finish-pink-2022?wid=104&amp;hei=104&amp;fmt=png-alpha&amp;.v=1668014174903"
+            style="width: 60px" alt="粉紅色">
+        <img src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/ipad-air-finish-purple-2022?wid=104&amp;hei=104&amp;fmt=png-alpha&amp;.v=1668014175042"
+            style="width: 60px" alt="紫色">
+        <img src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/ipad-air-finish-starlight-2022?wid=102&amp;hei=102&amp;fmt=png-alpha&amp;.v=1669672818453"
+            style="width: 60px" alt="星光色">
+    </div>
     <div class="container ">
-        <h1 style="text-align: center; color:rebeccapurple ;"><strong> I-padの商品查詢 </strong></h1>
-        <form class="row justify-content-center " id="search">
-            <select class=" col-3 m-1" placeholder="顏色" id="color" onchange="Colorpick()">
+        <h1 style="text-align: center; color: slateblue;"><strong> I-padの商品查詢 </strong></h1>
+        <form class="row justify-content-center" id="search">
+            <select class=" col-3 m-1" placeholder="顏色" id="color" onchange="Color_pick()">
                 <option selected value="顏色">顏色</option>
                 <option value="太空灰色">太空灰色</option>
                 <option value="藍色">藍色</option>
@@ -22,35 +36,67 @@
                 <option value="紫色">紫色</option>
                 <option value="星光色">星光色</option>
             </select>
-            <select class="col-3 m-1" placeholder="容量" id="capacity" onchange="Capacitypick()">
+            <select class="col-3 m-1" placeholder="容量" id="capacity" onchange="Capacity_pick()">
                 <option selected value="容量">容量</option>
                 <option value="64GB">64GB</option>
                 <option value="256GB">256GB</option>
             </select>
-            <select class=" col-3 m-1" placeholder="Wi-fiの選項" id="wi-fi" onchange="Wifipick()">
+            <select class=" col-3 m-1" placeholder="Wi-fiの選項" id="wifi" onchange="Wifi_pick()">
                 <option selected value="Wi-fiの選項">Wi-fiの選項</option>
                 <option value="Wi-Fi">Wi-Fi</option>
-                <option value="Wi-Fi + 行動網路"> Wi-Fi + 行動網路</option>
+                <option value="Wi-Fi+ 行動網路">Wi-Fi+ 行動網路</option>
             </select>
-            <button class=" col-1 soldout " id="Searchbtn" type="submit">查詢</button>
-        </form>
+            <button class=" col-2 soldout " id="search" onclick="ipadinfo(); return false;">查詢</button>
+            <img class = 'col-6 ' id="image" src="data:image/jpeg;base64,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">
+            <h1 id = "price" style = "text-align: center; ">售價$NT19900起</h1>
+        </form>  
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
-    <script>
-    const url = "https://github.com/Nray811/JsonStorage/blob/main/ipadjson.json";
-    let color, capacity, wifi;
-        function Colorpick(){
-            return color;
+    <script>   
+        let color, capacity, wifi , ipad = { };  
+        const url = "https://raw.githubusercontent.com/Nray811/JsonStorage/main/ipadjson.json";
+        function Color_pick(){
+            color = document.getElementById('color').value;
+            console.log(color);
         }
-        function Capacitypick() {
-            return capacity;
+        function Capacity_pick() {
+            capacity = document.getElementById("capacity").value;
+            console.log(capacity);
         }
-        function Wifipick() {
-            return wifi;
+        function Wifi_pick() {
+            wifi = document.getElementById("wifi").value;
+            console.log(wifi);
         }
-
-
+        function ipadinfo() {
+            ipad.color = color;
+            ipad.capacity = capacity;
+            ipad.wifi = wifi;
+            }
+        window.onload = function () {
+            event.preventDefault()
+            document.getElementById('search').addEventListener("click", requestJSON);
+        }
+        
+        let ipadArray = [];
+        let xhr = new XMLHttpRequest();
+        function requestJSON() {
+            xhr.onload = function () {
+            ipadArray = this.response;
+            //console.log(ipadArray);
+            let query = ipadArray.filter(item => item.color == ipad.color && item.storage == ipad.capacity && item.network == ipad.wifi);
+            console.log(query[0]);
+            document.getElementById("price").innerHTML = `NT$ ${query[0].price}`;
+            document.getElementById("image").src = query[0].picture;
+        }
+            xhr.open("Get", url);
+            xhr.responseType = "json";
+            xhr.send();
+        }
+        
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
 </body>
 </html>     
+
