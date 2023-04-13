@@ -47,8 +47,9 @@
                 <option value="Wi-Fi+ 行動網路">Wi-Fi+ 行動網路</option>
             </select>
             <button class=" col-2 soldout " id="search" onclick="ipadinfo(); return false;">查詢</button>
+            <h3 id='description' style="text-align: center; ">維尼是非賣品(Default)</h3>
             <img class = 'col-6 ' id="image" src="https://img.toy-people.com/member/161927740876.png">
-            <h1 id = "price" style = "text-align: center; ">售價$NT19900起</h1>
+            <h1 id = "price" style = "text-align: center; ">I-pad &nbsp$NT19,900起</h1>
         </form>  
     </div>
     <script>   
@@ -82,6 +83,7 @@
             //console.log(ipadArray);
             let query = ipadArray.filter(item => item.color == ipad.color && item.storage == ipad.capacity && item.network == ipad.wifi);
             console.log(query[0]);
+            document.getElementById("description").innerText = `${query[0].color} ${query[0].storage} ${query[0].network} ` ;
             document.getElementById("price").innerHTML = `NT$ ${query[0].price}`;
             document.getElementById("image").src = query[0].picture;
         }
